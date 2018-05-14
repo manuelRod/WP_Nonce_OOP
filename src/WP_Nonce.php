@@ -36,6 +36,19 @@ class WP_Nonce {
         return wp_create_nonce($this->action);
     }
 
+    /**
+     * Verify if nonce is correct.
+     * Returns:
+     * false if not valid.
+     * 1 – if the nonce has been generated in the past 12 hours or less.
+     * 2 – if the nonce was generated between 12 and 24 hours ago.
+     * @param $nonce
+     * @return false|int
+     */
+    public function verifyNonce($nonce) {
+        return wp_verify_nonce($nonce, $this->action);
+    }
+
 
 
 
