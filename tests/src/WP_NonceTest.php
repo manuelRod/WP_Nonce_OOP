@@ -48,6 +48,36 @@ class WP_Nonce_Test extends TestCase {
         $this->assertEquals(2, $this->nonce->verifyNonce($this->nonce->createNonce()));
     }
 
+    public function test_nonceField() {
+        Monkey\Functions\expect('wp_nonce_field')->once()->andReturn('<input type="hidden" ...>');
+        $this->assertEquals('<input type="hidden" ...>', $this->nonce->nonceField());
+    }
+
+    public function test_nonceUrl() {
+        Monkey\Functions\expect('wp_nonce_url')->once()->andReturn('http//test.test');
+        $this->assertEquals('http//test.test', $this->nonce->nonceUrl('http//test.test'));
+    }
+
+    public function test_checkAdminRefererInvalid() {
+        Monkey\Functions\expect('check_admin_referer')->once()->andReturn(false);
+        $this->assertFalse($this->nonce->checkAdminReferer());
+    }
+
+    public function test_checkAdminRefererValid() {
+        Monkey\Functions\expect('check_admin_referer')->once()->andReturn(1);
+        $this->assertEquals(1, $this->nonce->checkAdminReferer());
+    }
+
+    public function test_checkAjaxRefererInvalid() {
+        Monkey\Functions\expect('check_ajax_referer')->once()->andReturn(false);
+        $this->assertFalse($this->nonce->checkAjaxReferer());
+    }
+
+    public function test_checkAjaxRefererValid() {
+        Monkey\Functions\expect('check_ajax_referer')->once()->andReturn(1);
+        $this->assertEquals(1, $this->nonce->checkAjaxReferer());
+    }
+
     public function tearDown() {
         Monkey\tearDown();
         parent::tearDown();
