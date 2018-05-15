@@ -4,7 +4,7 @@ Wordpress Nonce OOP Implementation. Just an OOP wrap.
 ## Installation
 
 ```sh
-$ composer require manuelRod/WP_Nonce_OOP
+$ composer require manuel-rod/wp_nonce_oop
 ```
 ## Usage
 
